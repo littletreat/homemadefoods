@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Treat Home made foods - Pre-book Your Order</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cute food animations -->
+    <div class="food-animation food1">🍔</div>
+    <div class="food-animation food2">🥪</div>
+    <div class="food-animation food3">🌮</div>
+    <div class="food-animation food4">🍰</div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <span class="logo-icon">🍽️</span>
+                    <div class="logo-text">
+                        <h1 class="company-name">Little Treat</h1>
+                        <p class="logo-tagline">Home made foods | Bopal | Shela</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- <div class="special-offer">
+            <strong>🎉 Today's Menu </strong>
+        </div> -->
+
+        <!-- Progress Bar -->
+        <!-- <div class="progress-bar">
+            <div class="progress-step active" id="step1-indicator">
+                <i class="fas fa-utensils"></i> Select Items
+            </div>
+            <div class="progress-step" id="step2-indicator">
+                <i class="fas fa-map-marker-alt"></i> Address
+            </div>
+            <div class="progress-step" id="step3-indicator">
+                <i class="fas fa-check-circle"></i> Confirm
+            </div>
+        </div> -->
+
+        <!-- Step 1: Item Selection -->
+        <section class="product-section step active" id="step1">
+            <!-- Menu items will be dynamically loaded here by the MVC system -->
+            
+            <button class="book-button center-button" onclick="proceedToAddress()" id="proceedBtn">
+                Proceed to Delivery & Review <i class="fas fa-arrow-right"></i>
+            </button>
+        </section>
+
+        <!-- Step 2: Delivery Information & Review -->
+        <section class="product-section step" id="step2">
+            <div class="order-section">
+                <!-- <h3 style="color: #2d3436; margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-map-marker-alt"></i> Delivery Information & Review
+                </h3> -->
+
+                <!-- Delivery Address -->
+                <div class="form-group">
+                    <label class="form-label">📍 Delivery Address</label>
+                    <div class="address-grid">
+                        <input type="text" class="form-input" id="flatNumber" placeholder="Flat Number" required oninput="updateLiveReview()">
+                        <input type="text" class="form-input" id="apartmentName" placeholder="Apartment Name" required oninput="updateLiveReview()">
+                    </div>
+                    <div class="error-message" id="addressError">Please fill in both address fields</div>
+                </div>
+
+                <!-- Delivery Date & Time -->
+                <div class="form-group">
+                    <label class="form-label" for="dateSelect">📅 Delivery Date & Time - Loading...</label>
+                    <select class="form-select" id="dateSelect" required onchange="updateLiveReview()">
+                        <option value="">Loading delivery times...</option>
+                    </select>
+                    <div class="error-message" id="dateError">Please select a delivery time</div>
+                </div>
+
+                <!-- Order Summary -->
+                <div id="liveOrderSummary" style="margin-bottom: 25px;"></div>
+
+                <!-- Live Review Section -->
+                <!-- <div id="liveReviewSection" style="background: #fff8f0; padding: 1.5rem; border-radius: 12px; margin-top: 20px; border: 2px solid #ffe6e0; display: none;">
+                    <strong style="color: #ff6348;">📋 Order Summary:</strong>
+                    <div style="margin-top: 10px; color: #2d3436;">
+                        <div id="reviewAddress" style="margin: 5px 0;"></div>
+                        <div id="reviewDate" style="margin: 5px 0;"></div>
+                    </div>
+                </div> -->
+
+                <!-- Total Price -->
+                <div class="order-row total-price" style="font-size: 1.5em; margin-top: 20px;">
+                    <span>Total Amount:</span>
+                    <span id="finalTotalPrice">₹0</span>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-secondary" onclick="goToStep(1)">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="book-button" onclick="bookOrder()">
+                    <i class="fab fa-whatsapp"></i> Book Order
+                </button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i> Contact us: <span class="contact-number">+91 7874914422</span>
+            </div>
+            <div>Made with ❤️ by Little Treat Home made foods</div>
+        </footer>
+    </div>
+
+    <!-- MVC Architecture Scripts -->
+    <script src="models/MenuModel.js"></script>
+    <script src="views/MenuView.js"></script>
+    <script src="controllers/MenuController.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
