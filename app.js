@@ -9,7 +9,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Initialize MVC components
         const model = new MenuModel();
         const view = new MenuView();
-        const controller = new MenuController(model, view);
+        
+        // Load config first to check if Google Sheets is enabled
+        await model.loadConfig();
+        
+        // Initialize Google Sheets service if enabled
+        let sheetsService = null;
+        const sheetsConfig = model.config?.googleSheets;
+        
+        if (sheetsConfig && sheetsConfig.enabled) {
+            sheetsService = new GoogleSheetsService(sheetsConfig);
+            console.log('📊 Google Sheets service initialized');
+        }
+        
+        // Initialize controller with sheets service
+        const controller = new MenuController(model, view, sheetsService);
         
         // Initialize the application
         await controller.init();
@@ -38,9 +52,9 @@ function proceedToAddress() {
     }
 }
 
-function bookOrder() {
+async function bookOrder() {
     if (window.menuController) {
-        window.menuController.bookOrder();
+        await window.menuController.bookOrder();
     }
 }
 
