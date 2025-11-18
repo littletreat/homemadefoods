@@ -9,7 +9,7 @@
     <title>Little Treat Home made foods - Pre-book Your Order</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 <body>
     <!-- Cute food animations -->
@@ -69,7 +69,17 @@
                     <label class="form-label">📍 Delivery Address</label>
                     <div class="address-grid">
                         <input type="text" class="form-input" id="flatNumber" placeholder="Flat Number" required oninput="updateLiveReview()">
-                        <input type="text" class="form-input" id="apartmentName" placeholder="Apartment Name" required oninput="updateLiveReview()">
+                        <input list="apartmentList" type="text" class="form-input" id="apartmentName" placeholder="Apartment Name" required oninput="updateLiveReview()">
+                        <datalist id="apartmentList">
+                            <option value="Swastik Greens">
+                            <option value="Sheladia Sarva">
+                            <option value="Sun Atomsphere">
+                            <option value="Swati Chrysantha">
+                            <option value="Kavisha Panorama">
+                            <option value="Serenity Sky">
+                            <option value="Sanidhya Flora">
+                            
+                        </datalist>
                     </div>
                     <div class="error-message" id="addressError">Please fill in both address fields</div>
                 </div>
@@ -125,7 +135,7 @@
     <script src="views/MenuView.js?v=2"></script>
     <script src="services/GoogleSheetsService.js?v=2"></script>
     <script src="controllers/MenuController.js?v=2"></script>
-    <script src="app.js?v=2"></script>
+    <script src="js/app.js?v=2"></script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
       "unit": "piece",
       "emoji": "🥪",
       "image": null,
-      "display": 1
+      "display": 0
     },
     {
       "id": "pavbhaji",
@@ -49,7 +49,7 @@
       "unit": "kg",
       "emoji": "🍏",
       "image": "images/Custard_Apple.png",
-      "display": 1
+      "display": 0
     },
     {
       "id": "sabudanavada",
@@ -64,7 +64,7 @@
     {
       "id": "vegetablefrankie",
       "name": "Vegetable Frankie",
-      "description": "Delicious rolled in wheat roti wrap with mixed vegetables and spices",
+      "description": "Delicious rolled wrap with mixed vegetables and spices",
       "price": 30,
       "unit": "piece",
       "emoji": "🌯",
@@ -74,7 +74,7 @@
     {
       "id": "cheesevegfrankie",
       "name": "Cheese Vegetable Frankie",
-      "description": "Rolled in wheat roti wrap with mixed vegetables, cheese and spices",
+      "description": "Rolled wrap with mixed vegetables, cheese and spices",
       "price": 40,
       "unit": "piece",
       "emoji": "🌯",
