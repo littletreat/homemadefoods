@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Treat - Premium Chocolates & Confections | Ahmedabad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="floating-elements" aria-hidden="true">
+        <div class="floating-element">🍫</div>
+        <div class="floating-element">🧁</div>
+        <div class="floating-element">🍰</div>
+        <div class="floating-element">🍪</div>
+    </div>
+
+    <header class="navbar" data-controller="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">Little Treat</a>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="primary-navigation" class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Little Treat</h1>
+                    <p class="hero-subtitle">Premium Chocolates & Confections</p>
+                    <p class="hero-description">
+                        Indulge in handcrafted chocolates made with love and the finest ingredients. Every bite is a journey to chocolate paradise.
+                    </p>
+                    <div class="notice-stack">
+                        <article class="notice-card">
+                            <h4>📋 Pre-Orders Only</h4>
+                            <p>We prepare every batch fresh. Please place your order 24-48 hours in advance.</p>
+                        </article>
+                        <article class="notice-card">
+                            <h4>🎁 Gift Hampers Available</h4>
+                            <p>Perfect for celebrations! Custom gift hampers with beautiful packaging for your special occasions.</p>
+                        </article>
+                    </div>
+                    <p class="owners">🌟 Lovingly crafted by Foram & Parth 🌟</p>
+                    <a href="#menu" class="cta-button">Pre-Order Now</a>
+                </div>
+                <div class="hero-image">
+                    <div class="chocolate-showcase">
+                        <i class="fas fa-birthday-cake" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="menu" aria-labelledby="menu-heading">
+            <div class="container">
+                <h2 id="menu-heading" class="section-title">Our Delicious Menu</h2>
+                <div class="promo-card">
+                    <h3>🎯 Pre-Orders Only</h3>
+                    <p>All items are made fresh to order. Please place your order 24-48 hours in advance.</p>
+                    <p class="promo-highlight">🎁 Ask us about custom gift hampers for special occasions!</p>
+                </div>
+                <div id="menu-root" class="menu-grid" role="list"></div>
+                <section class="order-summary" aria-live="polite">
+                    <div class="order-summary__details">
+                        <h3>Your Selection</h3>
+                        <ul id="order-items" class="order-summary__list"></ul>
+                    </div>
+                    <div class="order-summary__actions">
+                        <p class="order-summary__total">Total: <span id="order-total">₹0</span></p>
+                        <button id="book-order" class="cta-button" type="button">Book Order on WhatsApp</button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About Little Treat</h2>
+                        <p>
+                            Welcome to Little Treat, where passion meets perfection in every chocolate creation. Located in the vibrant city of Ahmedabad, 
+                            we specialize in handcrafted chocolates and artisanal confections that bring joy to every moment.
+                        </p>
+                        <p>
+                            Our journey began with a simple dream — to create chocolates that not only taste extraordinary but also tell a story of craftsmanship, quality, and love. Every piece is carefully made using the finest ingredients sourced from around the world.
+                        </p>
+                        <p>
+                            <strong>Pre-Orders & Gift Hampers:</strong> We work on a pre-order basis to ensure maximum freshness and quality. Looking for the perfect gift? Our beautiful gift hampers are customized for birthdays, anniversaries, festivals, and corporate events.
+                        </p>
+                        <div class="owners-info">
+                            <h3>Meet Our Founders</h3>
+                            <p>
+                                <strong>Foram & Parth</strong> — The creative minds behind Little Treat. With years of experience in confectionery arts and a shared passion for innovation, they bring unique flavors and artistic designs that make every treat memorable.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="chocolate-showcase">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div>
+                        <h2>Place Your Pre-Order</h2>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                <span>Ahmedabad, Gujarat, India</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <span>+91 7874914422</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-gift" aria-hidden="true"></i>
+                                <span>Gift Hampers: Custom packaging available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>How to Order</h2>
+                        <div class="order-steps">
+                            <h4>📞 Simple 3-Step Process:</h4>
+                            <p>1. Call or WhatsApp us with your requirements.</p>
+                            <p>2. We'll confirm your order & share pickup/delivery details.</p>
+                            <p>3. Enjoy your fresh, handcrafted treats!</p>
+                        </div>
+                        <div class="gift-info">
+                            <h4>🎁 Gift Hampers:</h4>
+                            <p>Perfect for festivals, birthdays, corporate gifts, and special celebrations. We create beautiful custom packages!</p>
+                        </div>
+                        <h3>Follow Our Sweet Journey</h3>
+                        <div class="social-links">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                            <a href="https://wa.me/917874914422" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Little Treat. Crafted with 💝 by Foram & Parth | All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fallback menu data (in case fetch fails when opening file directly)
+        window.MENU_DATA_FALLBACK = {
+            "categories": [
+                {
+                    "id": "plain-chocolates",
+                    "name": "Plain Chocolates",
+                    "description": "Classic handcrafted chocolates made to order, available in three decadent profiles.",
+                    "items": [
+                        {"id": "plain-white", "name": "Plain White Chocolate", "icon": "🤍", "description": "Velvety white couverture with a creamy finish.", "price": 10, "unitLabel": "₹10 per piece"},
+                        {"id": "plain-dark", "name": "Plain Dark Chocolate", "icon": "🖤", "description": "Rich 55% dark chocolate with a smooth snap.", "price": 10, "unitLabel": "₹10 per piece"},
+                        {"id": "plain-milk", "name": "Plain Milk Chocolate", "icon": "🤎", "description": "Classic milk chocolate, silky and comforting.", "price": 10, "unitLabel": "₹10 per piece"}
+                    ]
+                },
+                {
+                    "id": "flavoured-bites",
+                    "name": "Signature Flavoured Bites",
+                    "description": "Playful flavour pairings crafted to surprise your palate.",
+                    "items": [
+                        {"id": "chilli-guava", "name": "Chilli Guava Bite", "icon": "🌶️", "description": "Sweet guava with a vibrant chilli kick.", "price": 12, "unitLabel": "₹12 per piece"},
+                        {"id": "pan-masala-pinata", "name": "Pan Masala Pinata", "icon": "🎭", "description": "Traditional pan masala notes inside a chocolate shell.", "price": 12, "unitLabel": "₹12 per piece"},
+                        {"id": "crispy-coffee-bite", "name": "Crispy Coffee Bite", "icon": "☕", "description": "Espresso-infused chocolate with a crunchy finish.", "price": 12, "unitLabel": "₹12 per piece"},
+                        {"id": "salted-caramel-bite", "name": "Salted Caramel Bite", "icon": "🧂", "description": "Soft caramel centre, finished with Maldon sea salt.", "price": 10, "unitLabel": "₹10 per piece"},
+                        {"id": "pineapple-crush-bite", "name": "Pineapple Crush Bite", "icon": "🍍", "description": "Tropical pineapple puree wrapped in chocolate.", "price": 10, "unitLabel": "₹10 per piece"},
+                        {"id": "strawberry-crush-bite", "name": "Strawberry Crush Bite", "icon": "🍓", "description": "Strawberry compote encased in creamy chocolate.", "price": 10, "unitLabel": "₹10 per piece"},
+                        {"id": "mixed-berry-white", "name": "Mixed Berry White Chocolate", "icon": "🫐", "description": "Tangy berries suspended in Belgian white chocolate.", "price": 12, "unitLabel": "₹12 per piece"}
+                    ]
+                },
+                {
+                    "id": "nutty-indulgence",
+                    "name": "Nutty Indulgence",
+                    "description": "Nut-forward delights that balance crunch and creaminess.",
+                    "items": [
+                        {"id": "almond-walnut", "name": "Almond Walnut Chocolate", "icon": "🌰", "description": "Roasted almonds and walnuts folded into chocolate.", "price": 15, "unitLabel": "₹15 per piece"},
+                        {"id": "dates-almond", "name": "Dates Almond Chocolate", "icon": "🌴", "description": "Stuffed Medjool dates dipped in rich chocolate.", "price": 15, "unitLabel": "₹15 per piece"},
+                        {"id": "mini-coffee-cups", "name": "Mini Coffee Cups", "icon": "🍮", "description": "Bite-sized coffee ganache in edible chocolate cups.", "price": 15, "unitLabel": "₹15 per piece"},
+                        {"id": "ferrero-rocher", "name": "Ferrero Rocher Style", "icon": "✨", "description": "Hazelnut centre with crisp wafer layers.", "price": 30, "unitLabel": "₹30 per piece"}
+                    ]
+                },
+                {
+                    "id": "bars-specials",
+                    "name": "Bars & Specials",
+                    "description": "Shareable favourites and gifting classics from our kitchen.",
+                    "items": [
+                        {"id": "designer-bar", "name": "Designer Chocolate Bar", "icon": "🎨", "description": "Hand-painted bar featuring seasonal inclusions.", "price": 150, "unitLabel": "₹150 per bar"},
+                        {"id": "salted-caramel-bar", "name": "Salted Caramel Bar", "icon": "🍯", "description": "Layered caramel, nougat and chocolate bar.", "price": 150, "unitLabel": "₹150 per bar"},
+                        {"id": "bonty-bar", "name": "Bonty Bar", "icon": "🥥", "description": "Coconut filling coated in silky milk chocolate.", "price": 25, "unitLabel": "₹25 per bar"},
+                        {"id": "bubbly-bar", "name": "Bubbly Chocolate Bar", "icon": "🫧", "description": "Aerated chocolate bar for a melt-in-mouth bite.", "price": 120, "unitLabel": "₹120 per bar"},
+                        {"id": "crunchy-hazelbar", "name": "Crunchy Hazelbar", "icon": "🥜", "description": "Chunky hazelnut praline with a crisp finish.", "price": 100, "unitLabel": "₹100 per bar"},
+                        {"id": "chew-toffee", "name": "Chew Toffee", "icon": "🍬", "description": "Soft chew toffee wrapped in chocolate.", "price": 10, "unitLabel": "₹10 per piece"}
+                    ]
+                }
+            ]
+        };
+    </script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+
