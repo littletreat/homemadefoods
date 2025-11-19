@@ -16,9 +16,22 @@
         <div class="floating-element">🍪</div>
     </div>
 
-    <header class="navbar" data-controller="navbar">
+    <!-- Main Header with Logo -->
+    <header class="main-header">
+        <div class="header-logo-container">
+            <div class="header-logo">
+                <img src="../images/company_logo.jpeg" alt="Little Treat Logo" class="header-company-logo-img">
+                <div class="header-logo-text">
+                    <h1 class="header-company-name">Little Treat</h1>
+                    <p class="header-logo-tagline">Premium Chocolates & Confections</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" data-controller="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo">Little Treat</a>
             <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <i class="fas fa-bars"></i>
@@ -30,33 +43,24 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
-    </header>
+    </nav>
 
     <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">Little Treat</h1>
-                    <p class="hero-subtitle">Premium Chocolates & Confections</p>
-                    <p class="hero-description">
-                        Indulge in handcrafted chocolates made with love and the finest ingredients. Every bite is a journey to chocolate paradise.
-                    </p>
-                    <div class="notice-stack">
-                        <article class="notice-card">
-                            <h4>📋 Pre-Orders Only</h4>
-                            <p>We prepare every batch fresh. Please place your order 24-48 hours in advance.</p>
-                        </article>
-                        <article class="notice-card">
-                            <h4>🎁 Gift Hampers Available</h4>
-                            <p>Perfect for celebrations! Custom gift hampers with beautiful packaging for your special occasions.</p>
-                        </article>
+        <!-- Quick Info Banner -->
+        <section class="quick-info-banner">
+            <div class="container">
+                <div class="info-items">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Pre-Orders: 24-48 hours in advance</span>
                     </div>
-                    <p class="owners">🌟 Lovingly crafted by Foram & Parth 🌟</p>
-                    <a href="#menu" class="cta-button">Pre-Order Now</a>
-                </div>
-                <div class="hero-image">
-                    <div class="chocolate-showcase">
-                        <i class="fas fa-birthday-cake" aria-hidden="true"></i>
+                    <div class="info-item">
+                        <i class="fas fa-gift"></i>
+                        <span>Custom Gift Hampers Available</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-heart"></i>
+                        <span>Lovingly crafted by Foram</span>
                     </div>
                 </div>
             </div>
@@ -64,23 +68,70 @@
 
         <section id="menu" class="menu" aria-labelledby="menu-heading">
             <div class="container">
-                <h2 id="menu-heading" class="section-title">Our Delicious Menu</h2>
-                <div class="promo-card">
-                    <h3>🎯 Pre-Orders Only</h3>
-                    <p>All items are made fresh to order. Please place your order 24-48 hours in advance.</p>
-                    <p class="promo-highlight">🎁 Ask us about custom gift hampers for special occasions!</p>
+                <h2 id="menu-heading" class="section-title">Select Your Chocolates</h2>
+                <p class="menu-subtitle">Handcrafted chocolates made with the finest ingredients. Choose your favorites and place your order!</p>
+                <!-- Step 1: Item Selection -->
+                <div id="step1" class="step active">
+                    <div id="menu-root" class="menu-grid" role="list"></div>
+                    <section class="order-summary" aria-live="polite">
+                        <div class="order-summary__details">
+                            <h3>Your Selection</h3>
+                            <ul id="order-items" class="order-summary__list"></ul>
+                        </div>
+                        <div class="order-summary__actions">
+                            <p class="order-summary__total">Total: <span id="order-total">₹0</span></p>
+                            <button id="proceed-btn" class="cta-button" type="button">
+                                Proceed to Delivery & Review <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
                 </div>
-                <div id="menu-root" class="menu-grid" role="list"></div>
-                <section class="order-summary" aria-live="polite">
-                    <div class="order-summary__details">
-                        <h3>Your Selection</h3>
-                        <ul id="order-items" class="order-summary__list"></ul>
+
+                <!-- Step 2: Delivery Information & Review -->
+                <div id="step2" class="step" style="display: none;">
+                    <div class="order-form-section">
+                        <h3 style="color: var(--deep-purple); margin-bottom: 20px; text-align: center;">
+                            <i class="fas fa-map-marker-alt"></i> Delivery Information & Review
+                        </h3>
+
+                        <!-- Delivery Address -->
+                        <div class="form-group">
+                            <label class="form-label">📍 Delivery Address</label>
+                            <div class="address-grid">
+                                <input type="text" class="form-input" id="flatNumber" placeholder="Flat Number" required>
+                                <input list="apartmentList" type="text" class="form-input" id="apartmentName" placeholder="Apartment Name" required>
+                                <datalist id="apartmentList">
+                                    <option value="Swastik Greens">
+                                    <option value="Sheladia Sarva">
+                                    <option value="Sun Atomsphere">
+                                    <option value="Swati Chrysantha">
+                                    <option value="Kavisha Panorama">
+                                    <option value="Serenity Sky">
+                                    <option value="Sanidhya Flora">
+                                </datalist>
+                            </div>
+                            <div class="error-message" id="addressError">Please fill in both address fields</div>
+                        </div>
+
+                        <!-- Order Summary -->
+                        <div id="final-order-summary" style="margin: 25px 0;"></div>
+
+                        <!-- Total Price -->
+                        <div class="order-row total-price" style="font-size: 1.5em; margin-top: 20px;">
+                            <span>Total Amount:</span>
+                            <span id="finalTotalPrice">₹0</span>
+                        </div>
+
+                        <div class="nav-buttons">
+                            <button class="btn-secondary" id="back-btn">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button class="cta-button" id="book-order">
+                                <i class="fab fa-whatsapp"></i> Book Order on WhatsApp
+                            </button>
+                        </div>
                     </div>
-                    <div class="order-summary__actions">
-                        <p class="order-summary__total">Total: <span id="order-total">₹0</span></p>
-                        <button id="book-order" class="cta-button" type="button">Book Order on WhatsApp</button>
-                    </div>
-                </section>
+                </div>
             </div>
         </section>
 
@@ -136,7 +187,7 @@
                         </div>
                     </div>
                     <div>
-                        <h2>How to Order</h2>
+                        <h2>Customize Your Order</h2>
                         <div class="order-steps">
                             <h4>📞 Simple 3-Step Process:</h4>
                             <p>1. Call or WhatsApp us with your requirements.</p>
@@ -149,7 +200,7 @@
                         </div>
                         <h3>Follow Our Sweet Journey</h3>
                         <div class="social-links">
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://www.instagram.com/little_treat_ahmedabad" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
                             <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
                             <a href="https://wa.me/917874914422" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                         </div>

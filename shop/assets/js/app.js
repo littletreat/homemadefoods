@@ -99,10 +99,20 @@ class MenuView {
         this.menuRoot = document.getElementById('menu-root');
         this.orderList = document.getElementById('order-items');
         this.orderTotal = document.getElementById('order-total');
+        this.proceedButton = document.getElementById('proceed-btn');
         this.bookOrderButton = document.getElementById('book-order');
+        this.backButton = document.getElementById('back-btn');
         this.navToggle = document.querySelector('.nav-toggle');
         this.navLinks = document.getElementById('primary-navigation');
         this.navbar = document.querySelector('.navbar');
+        this.step1 = document.getElementById('step1');
+        this.step2 = document.getElementById('step2');
+        this.flatNumberInput = document.getElementById('flatNumber');
+        this.apartmentNameInput = document.getElementById('apartmentName');
+        this.finalOrderSummary = document.getElementById('final-order-summary');
+        this.finalTotalPrice = document.getElementById('finalTotalPrice');
+        this.addressError = document.getElementById('addressError');
+        
         this.currencyFormatter = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR',
@@ -271,6 +281,16 @@ class MenuView {
         });
     }
 
+    bindProceedToAddress(handler) {
+        if (!this.proceedButton) return;
+        this.proceedButton.addEventListener('click', handler);
+    }
+
+    bindBackToMenu(handler) {
+        if (!this.backButton) return;
+        this.backButton.addEventListener('click', handler);
+    }
+
     bindBookOrder(handler) {
         if (!this.bookOrderButton) return;
         this.bookOrderButton.addEventListener('click', handler);
@@ -337,21 +357,101 @@ class MenuView {
         this.orderTotal.textContent = this.currencyFormatter.format(total);
     }
 
+    updateFinalOrderSummary(items, total) {
+        if (!this.finalOrderSummary || !this.finalTotalPrice) return;
+
+        this.finalOrderSummary.innerHTML = '';
+
+        if (items.length > 0) {
+            const summaryDiv = document.createElement('div');
+            summaryDiv.style.background = 'white';
+            summaryDiv.style.padding = '1.5rem';
+            summaryDiv.style.borderRadius = '12px';
+            summaryDiv.style.border = '2px solid var(--light-purple)';
+
+            const heading = document.createElement('h4');
+            heading.textContent = '📋 Order Summary';
+            heading.style.color = 'var(--deep-purple)';
+            heading.style.marginBottom = '1rem';
+            summaryDiv.appendChild(heading);
+
+            items.forEach((item) => {
+                const row = document.createElement('div');
+                row.className = 'order-row';
+                
+                const itemText = document.createElement('span');
+                itemText.textContent = `${item.name} × ${item.quantity}`;
+                
+                const itemPrice = document.createElement('strong');
+                itemPrice.textContent = this.currencyFormatter.format(item.subtotal);
+                
+                row.appendChild(itemText);
+                row.appendChild(itemPrice);
+                summaryDiv.appendChild(row);
+            });
+
+            this.finalOrderSummary.appendChild(summaryDiv);
+        }
+
+        this.finalTotalPrice.textContent = this.currencyFormatter.format(total);
+    }
+
+    goToStep(step) {
+        if (step === 1) {
+            this.step1.style.display = 'block';
+            this.step2.style.display = 'none';
+            this.step1.classList.add('active');
+            this.step2.classList.remove('active');
+        } else if (step === 2) {
+            this.step1.style.display = 'none';
+            this.step2.style.display = 'block';
+            this.step1.classList.remove('active');
+            this.step2.classList.add('active');
+            // Scroll to top of step 2
+            this.step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    getAddressData() {
+        return {
+            flatNumber: this.flatNumberInput?.value.trim() || '',
+            apartmentName: this.apartmentNameInput?.value.trim() || ''
+        };
+    }
+
+    validateAddress() {
+        const { flatNumber, apartmentName } = this.getAddressData();
+        const isValid = flatNumber !== '' && apartmentName !== '';
+        
+        if (!isValid && this.addressError) {
+            this.addressError.style.display = 'block';
+        } else if (this.addressError) {
+            this.addressError.style.display = 'none';
+        }
+        
+        return isValid;
+    }
+
     setNavScrolled(isScrolled) {
         if (!this.navbar) return;
         this.navbar.classList.toggle('is-scrolled', isScrolled);
     }
 
     showEmptyOrderMessage() {
-        window.alert('Please add at least one item before booking your order.');
+        window.alert('Please add at least one item before proceeding.');
+    }
+
+    showAddressErrorMessage() {
+        window.alert('Please fill in both flat number and apartment name.');
     }
 }
 
 class MenuController {
-    constructor({ model, view, whatsappNumber }) {
+    constructor({ model, view, whatsappNumber, sheetsService }) {
         this.model = model;
         this.view = view;
         this.whatsappNumber = whatsappNumber.replace(/\D/g, '');
+        this.sheetsService = sheetsService;
         this.navigationOpen = false;
     }
 
@@ -378,6 +478,8 @@ class MenuController {
             this.refreshSummary();
         });
 
+        this.view.bindProceedToAddress(() => this.handleProceedToAddress());
+        this.view.bindBackToMenu(() => this.handleBackToMenu());
         this.view.bindBookOrder(() => this.handleBookOrder());
 
         this.view.bindNavToggle(() => {
@@ -401,7 +503,7 @@ class MenuController {
         this.view.updateOrderSummary(items, total);
     }
 
-    handleBookOrder() {
+    handleProceedToAddress() {
         const items = this.model.getSelectedItems();
 
         if (items.length === 0) {
@@ -410,16 +512,62 @@ class MenuController {
         }
 
         const total = this.model.getOrderTotal();
+        this.view.updateFinalOrderSummary(items, total);
+        this.view.goToStep(2);
+    }
+
+    handleBackToMenu() {
+        this.view.goToStep(1);
+    }
+
+    async handleBookOrder() {
+        const items = this.model.getSelectedItems();
+
+        if (items.length === 0) {
+            this.view.showEmptyOrderMessage();
+            return;
+        }
+
+        if (!this.view.validateAddress()) {
+            this.view.showAddressErrorMessage();
+            return;
+        }
+
+        const addressData = this.view.getAddressData();
+        const total = this.model.getOrderTotal();
+
+        // Save to Google Sheets if service is available
+        if (this.sheetsService) {
+            const orderData = {
+                flatNumber: addressData.flatNumber,
+                apartmentName: addressData.apartmentName,
+                items: items.map(item => `${item.name} x ${item.quantity} pcs (₹${item.subtotal})`).join(', '),
+                total: `₹${total}`
+            };
+
+            try {
+                await this.sheetsService.saveOrder(orderData);
+            } catch (error) {
+                console.error('Failed to save order to Google Sheets:', error);
+            }
+        }
+
+        // Generate WhatsApp message
         const messageLines = [
             'Hello Little Treat,',
             '',
-            'I would like to place an order:',
+            'I would like to place an order for chocolates:',
             '',
+            '📦 *Order Details:*',
             ...items.map((item) => `• ${item.name} × ${item.quantity} = ${this.view.currencyFormatter.format(item.subtotal)}`),
             '',
-            `Total: ${this.view.currencyFormatter.format(total)}`,
+            `💰 *Total: ${this.view.currencyFormatter.format(total)}*`,
             '',
-            'Please confirm availability.'
+            '📍 *Delivery Address:*',
+            `Flat: ${addressData.flatNumber}`,
+            `Apartment: ${addressData.apartmentName}`,
+            '',
+            'Please confirm availability and delivery details.'
         ];
 
         const message = encodeURIComponent(messageLines.join('\n'));
@@ -440,11 +588,100 @@ class MenuController {
     }
 }
 
-const app = new MenuController({
-    model: new MenuModel('data/menu.json'),
-    view: new MenuView(),
-    whatsappNumber: '+91 7874914422'
-});
+// Google Sheets Service for Chocolates
+class GoogleSheetsService {
+    constructor(config) {
+        this.method = config.method || 'appsScript';
+        this.webAppUrl = config.webAppUrl;
+        this.sheetName = config.sheetName || 'chocolates_orders';
+        this.enabled = config.enabled !== false;
+    }
 
-app.init();
+    async saveOrder(orderData) {
+        if (!this.enabled || !this.webAppUrl) {
+            console.log('Google Sheets integration is disabled or not configured');
+            return false;
+        }
 
+        try {
+            const orderId = this.generateOrderId();
+            const fullOrderData = {
+                orderId: orderId,
+                flatNumber: orderData.flatNumber,
+                apartmentName: orderData.apartmentName,
+                items: orderData.items,
+                total: orderData.total,
+                status: 'Pending',
+                timestamp: new Date().toISOString(),
+                sheetName: this.sheetName
+            };
+
+            const response = await fetch(this.webAppUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(fullOrderData)
+            });
+
+            return true;
+        } catch (error) {
+            console.error('Error saving to Google Sheets:', error);
+            return false;
+        }
+    }
+
+    generateOrderId() {
+        const timestamp = Date.now();
+        const random = Math.floor(Math.random() * 1000);
+        const orderId = `#CHO${timestamp.toString().slice(-6)}${random.toString().padStart(3, '0')}`;
+        return orderId;
+    }
+}
+
+// Initialize the application
+async function initApp() {
+    try {
+        // Load config
+        let config = {
+            googleSheets: {
+                enabled: false,
+                method: 'appsScript',
+                webAppUrl: '',
+                sheetName: 'chocolates_orders'
+            },
+            whatsappNumber: '+91 7874914422'
+        };
+
+        try {
+            const configResponse = await fetch('config.json');
+            if (configResponse.ok) {
+                config = await configResponse.json();
+            }
+        } catch (error) {
+            console.log('Config file not found, using defaults');
+        }
+
+        // Initialize Google Sheets service if enabled
+        let sheetsService = null;
+        if (config.googleSheets && config.googleSheets.enabled) {
+            sheetsService = new GoogleSheetsService(config.googleSheets);
+        }
+
+        const app = new MenuController({
+            model: new MenuModel('data/menu.json'),
+            view: new MenuView(),
+            whatsappNumber: config.whatsappNumber,
+            sheetsService: sheetsService
+        });
+
+        await app.init();
+        window.chocolateApp = app;
+    } catch (error) {
+        console.error('Failed to initialize app:', error);
+    }
+}
+
+// Start the application
+initApp();

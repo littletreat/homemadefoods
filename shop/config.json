@@ -1,0 +1,10 @@
+{
+  "googleSheets": {
+    "enabled": false,
+    "method": "appsScript",
+    "webAppUrl": "",
+    "sheetName": "chocolates_orders"
+  },
+  "whatsappNumber": "+91 7874914422"
+}
+
