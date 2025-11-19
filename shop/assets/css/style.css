@@ -125,12 +125,12 @@ main {
 }
 
 .header-company-logo-img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 50%;
     background: white;
-    padding: 5px;
+    padding: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     animation: bounce 2s infinite;
 }
@@ -146,9 +146,9 @@ main {
 }
 
 .header-company-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 3em;
-    font-weight: 700;
+    font-family: 'Pacifico', cursive;
+    font-size: 3.5em;
+    font-weight: 400;
     margin: 0;
     color: white;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
@@ -156,9 +156,9 @@ main {
 }
 
 .header-logo-tagline {
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-weight: 300;
-    margin: 5px 0 0 0;
+    margin: 8px 0 0 0;
     opacity: 0.95;
     letter-spacing: 2px;
     color: white;
@@ -489,141 +489,390 @@ main {
     margin-bottom: 1rem;
 }
 
-.about {
-    padding: 6rem 0;
-    background: var(--gradient-bg);
+/* Compact About Section */
+.about-compact {
+    padding: 3rem 0;
+    background: var(--soft-lavender);
 }
 
-.about-content {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem;
+.about-compact-content {
+    display: flex;
     align-items: center;
-}
-
-.about-text h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    color: var(--deep-purple);
-    margin-bottom: 2rem;
-}
-
-.about-text p {
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-dark);
-}
-
-.owners-info {
-    background: rgba(255, 255, 255, 0.85);
+    justify-content: center;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
     padding: 2rem;
-    border-radius: 18px;
-    margin-top: 2rem;
+    background: white;
+    border-radius: 20px;
     box-shadow: var(--shadow-soft);
 }
 
-.owners-info h3 {
+.about-icon {
+    font-size: 4rem;
+    flex-shrink: 0;
+}
+
+.about-text-compact h3 {
+    font-family: 'Playfair Display', serif;
     color: var(--deep-purple);
-    margin-bottom: 1rem;
-    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
 }
 
-.contact {
-    padding: 6rem 0;
-    background: var(--deep-purple);
-    color: white;
+.about-text-compact p {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
 }
 
-.contact-content {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem;
-}
-
-.contact h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 2.6rem);
-    margin-bottom: 2rem;
-    color: var(--light-purple);
-}
-
-.contact-info {
-    display: grid;
-    gap: 1rem;
-}
-
-.contact-item {
+/* Floating Category Menu Button */
+.floating-menu-btn {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 2px solid var(--primary-purple);
+    border-radius: 30px;
+    padding: 12px 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    font-size: 1.05rem;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 900;
+    transition: all 0.3s ease;
+    color: var(--deep-purple);
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
-.contact-item i {
-    color: var(--light-purple);
+.floating-menu-btn:hover {
+    background: var(--light-purple);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(177, 156, 217, 0.4);
+}
+
+.floating-menu-btn i {
     font-size: 1.2rem;
 }
 
-.order-steps,
-.gift-info {
-    margin-bottom: 1.5rem;
+/* Hide floating menu and sticky cart when in step 2 */
+.step#step2.active ~ .floating-menu-btn,
+body:has(#step2.active) .floating-menu-btn {
+    display: none;
 }
 
-.order-steps h4,
-.gift-info h4 {
-    color: var(--light-purple);
-    margin-bottom: 0.75rem;
-    font-size: 1.05rem;
+.step#step2.active ~ .sticky-cart,
+body:has(#step2.active) .sticky-cart {
+    display: none !important;
 }
 
-.social-links {
+/* Category Menu Popup */
+.category-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: fadeIn 0.2s ease;
+}
+
+.category-menu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    max-width: 85vw;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
     display: flex;
-    gap: 1.25rem;
-    margin-top: 1rem;
+    flex-direction: column;
+    animation: slideInRight 0.3s ease;
 }
 
-.social-links a {
-    color: var(--light-purple);
-    font-size: 1.8rem;
-    transition: transform 0.3s ease;
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
-.social-links a:hover,
-.social-links a:focus-visible {
-    transform: scale(1.2);
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.category-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--light-purple);
+    border-bottom: 2px solid var(--primary-purple);
+}
+
+.category-menu-header h3 {
+    color: var(--deep-purple);
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+}
+
+.close-menu-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--deep-purple);
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.close-menu-btn:hover {
+    background: rgba(177, 156, 217, 0.3);
+}
+
+.category-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+}
+
+.category-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(177, 156, 217, 0.2);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-item:hover {
+    background: var(--soft-lavender);
+}
+
+.category-item:active {
+    background: var(--light-purple);
+}
+
+.category-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--soft-lavender);
+    border-radius: 10px;
+}
+
+.category-info {
+    flex: 1;
+}
+
+.category-name {
+    font-weight: 600;
+    color: var(--deep-purple);
+    font-size: 1rem;
+    margin-bottom: 3px;
+}
+
+.category-count {
+    font-size: 0.85rem;
+    color: rgba(74, 59, 92, 0.7);
+}
+
+/* Sticky Bottom Cart */
+.sticky-cart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+    padding: 1rem 1.5rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 800;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.sticky-cart-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cart-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    font-weight: 600;
+}
+
+.cart-items-count {
+    font-size: 1rem;
+}
+
+.cart-divider {
+    opacity: 0.5;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+}
+
+.view-cart-btn {
+    background: white;
+    color: var(--deep-purple);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.view-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .footer {
     background: var(--text-dark);
     color: white;
-    text-align: center;
-    padding: 2rem 0;
+    padding: 3rem 0 1rem;
+    margin-bottom: 0;
 }
 
-.footer p {
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--light-purple);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
     font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-section a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--light-purple);
+}
+
+.footer-section i {
+    color: var(--light-purple);
+    margin-right: 0.5rem;
+}
+
+.footer-tagline {
+    font-style: italic;
+    color: var(--light-purple);
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(177, 156, 217, 0.2);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background: var(--primary-purple);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
 @media (max-width: 1024px) {
-    .about-content,
-    .contact-content {
+    .footer-content {
         grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
     }
 }
 
 @media (max-width: 768px) {
     .header-company-name {
-        font-size: 2em;
+        font-size: 2.5em;
     }
 
     .header-logo-tagline {
-        font-size: 1em;
+        font-size: 1.1em;
         letter-spacing: 1px;
     }
 
     .header-company-logo-img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
     }
 
     .main-header {
@@ -671,6 +920,11 @@ main {
         transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
+    .about-compact-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
     .menu-category {
         padding: 1.75rem;
     }
@@ -681,10 +935,6 @@ main {
 
     .order-summary {
         grid-template-columns: minmax(0, 1fr);
-    }
-
-    .contact-content {
-        gap: 2rem;
     }
 }
 
@@ -804,17 +1054,17 @@ main {
 
 @media (max-width: 576px) {
     .header-company-name {
-        font-size: 1.5em;
+        font-size: 2em;
     }
 
     .header-logo-tagline {
-        font-size: 0.85em;
+        font-size: 0.9em;
         letter-spacing: 0.5px;
     }
 
     .header-company-logo-img {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
     }
 
     .main-header {
@@ -848,6 +1098,22 @@ main {
         padding: 0 1rem;
     }
 
+    .about-compact {
+        padding: 2rem 0;
+    }
+
+    .about-compact-content {
+        padding: 1.5rem;
+    }
+
+    .about-icon {
+        font-size: 3rem;
+    }
+
+    .about-text-compact h3 {
+        font-size: 1.2rem;
+    }
+
     .menu {
         padding: 2rem 0 3rem;
     }
@@ -872,6 +1138,52 @@ main {
 
     .order-form-section {
         padding: 1.5rem;
+    }
+
+    .floating-menu-btn {
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 0.75rem;
+    }
+
+    .floating-menu-btn i {
+        font-size: 1rem;
+    }
+
+    .category-menu {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .sticky-cart {
+        padding: 0.75rem 1rem;
+    }
+
+    .sticky-cart-content {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .cart-info {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .view-cart-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer-content {
+        text-align: center;
+    }
+
+    .footer-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+        justify-content: center;
     }
 }
 

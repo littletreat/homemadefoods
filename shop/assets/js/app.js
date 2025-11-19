@@ -33,7 +33,6 @@ class MenuModel {
         } catch (error) {
             console.error('Error fetching menu, trying fallback data...', error);
             
-            // Try to use fallback data embedded in HTML
             if (window.MENU_DATA_FALLBACK) {
                 console.log('Using fallback menu data');
                 const data = window.MENU_DATA_FALLBACK;
@@ -113,6 +112,16 @@ class MenuView {
         this.finalTotalPrice = document.getElementById('finalTotalPrice');
         this.addressError = document.getElementById('addressError');
         
+        this.categoryMenuBtn = document.getElementById('category-menu-btn');
+        this.categoryMenu = document.getElementById('category-menu');
+        this.closeCategoryMenu = document.getElementById('close-category-menu');
+        this.categoryOverlay = document.getElementById('category-overlay');
+        this.categoryList = document.getElementById('category-list');
+        this.stickyCart = document.getElementById('sticky-cart');
+        this.cartCount = document.getElementById('cart-count');
+        this.cartTotalSticky = document.getElementById('cart-total-sticky');
+        this.viewCartBtn = document.getElementById('view-cart-btn');
+        
         this.currencyFormatter = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR',
@@ -149,12 +158,50 @@ class MenuView {
         });
 
         this.menuRoot.appendChild(fragment);
+        
+        // Render category menu
+        this.renderCategoryMenu(categories);
+    }
+    
+    renderCategoryMenu(categories) {
+        if (!this.categoryList) return;
+        
+        this.categoryList.innerHTML = '';
+        
+        categories.forEach((category) => {
+            const item = document.createElement('div');
+            item.className = 'category-item';
+            item.dataset.categoryId = category.id;
+            
+            const icon = document.createElement('div');
+            icon.className = 'category-icon';
+            icon.textContent = category.items?.[0]?.icon || '🍫';
+            
+            const info = document.createElement('div');
+            info.className = 'category-info';
+            
+            const name = document.createElement('div');
+            name.className = 'category-name';
+            name.textContent = category.name;
+            
+            const count = document.createElement('div');
+            count.className = 'category-count';
+            count.textContent = `${category.items?.length || 0} items`;
+            
+            info.appendChild(name);
+            info.appendChild(count);
+            item.appendChild(icon);
+            item.appendChild(info);
+            
+            this.categoryList.appendChild(item);
+        });
     }
 
     createCategorySection(category) {
         const section = document.createElement('section');
         section.className = 'menu-category';
         section.setAttribute('role', 'listitem');
+        section.id = `category-${category.id}`;
 
         const header = document.createElement('header');
         header.className = 'menu-category__header';
@@ -355,6 +402,65 @@ class MenuView {
         }
 
         this.orderTotal.textContent = this.currencyFormatter.format(total);
+        
+        this.updateStickyCart(items.length, total);
+    }
+    
+    updateStickyCart(itemCount, total) {
+        if (!this.stickyCart || !this.cartCount || !this.cartTotalSticky) return;
+        
+        if (itemCount > 0) {
+            this.cartCount.textContent = `${itemCount} item${itemCount > 1 ? 's' : ''}`;
+            this.cartTotalSticky.textContent = this.currencyFormatter.format(total);
+            this.stickyCart.style.display = 'block';
+        } else {
+            this.stickyCart.style.display = 'none';
+        }
+    }
+    
+    showCategoryMenu() {
+        if (this.categoryMenu && this.categoryOverlay) {
+            this.categoryMenu.style.display = 'flex';
+            this.categoryOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    
+    hideCategoryMenu() {
+        if (this.categoryMenu && this.categoryOverlay) {
+            this.categoryMenu.style.display = 'none';
+            this.categoryOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+    
+    scrollToCategory(categoryId) {
+        const categoryElement = document.getElementById(`category-${categoryId}`);
+        if (categoryElement) {
+            const navbarHeight = this.navbar?.offsetHeight || 80;
+            const elementPosition = categoryElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+            this.hideCategoryMenu();
+        }
+    }
+    
+    scrollToOrderSummary() {
+        const orderSummary = document.querySelector('.order-summary');
+        if (orderSummary) {
+            const navbarHeight = this.navbar?.offsetHeight || 80;
+            const elementPosition = orderSummary.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
     }
 
     updateFinalOrderSummary(items, total) {
@@ -402,12 +508,19 @@ class MenuView {
             this.step2.style.display = 'none';
             this.step1.classList.add('active');
             this.step2.classList.remove('active');
+            // Show sticky cart if items exist
+            const items = this.model?.getSelectedItems() || [];
+            if (items.length > 0 && this.stickyCart) {
+                this.stickyCart.style.display = 'block';
+            }
         } else if (step === 2) {
             this.step1.style.display = 'none';
             this.step2.style.display = 'block';
             this.step1.classList.remove('active');
             this.step2.classList.add('active');
-            // Scroll to top of step 2
+            if (this.stickyCart) {
+                this.stickyCart.style.display = 'none';
+            }
             this.step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
@@ -491,6 +604,41 @@ class MenuController {
             this.navigationOpen = false;
             this.view.closeNavigation();
         });
+        
+        if (this.view.categoryMenuBtn) {
+            this.view.categoryMenuBtn.addEventListener('click', () => {
+                this.view.showCategoryMenu();
+            });
+        }
+        
+        if (this.view.closeCategoryMenu) {
+            this.view.closeCategoryMenu.addEventListener('click', () => {
+                this.view.hideCategoryMenu();
+            });
+        }
+        
+        if (this.view.categoryOverlay) {
+            this.view.categoryOverlay.addEventListener('click', () => {
+                this.view.hideCategoryMenu();
+            });
+        }
+        
+        if (this.view.categoryList) {
+            this.view.categoryList.addEventListener('click', (e) => {
+                const categoryItem = e.target.closest('.category-item');
+                if (categoryItem) {
+                    const categoryId = categoryItem.dataset.categoryId;
+                    this.view.scrollToCategory(categoryId);
+                }
+            });
+        }
+        
+        // Sticky cart view button
+        if (this.view.viewCartBtn) {
+            this.view.viewCartBtn.addEventListener('click', () => {
+                this.view.scrollToOrderSummary();
+            });
+        }
 
         window.addEventListener('scroll', () => {
             this.view.setNavScrolled(window.scrollY > 40);
@@ -536,7 +684,6 @@ class MenuController {
         const addressData = this.view.getAddressData();
         const total = this.model.getOrderTotal();
 
-        // Save to Google Sheets if service is available
         if (this.sheetsService) {
             const orderData = {
                 flatNumber: addressData.flatNumber,
@@ -588,7 +735,6 @@ class MenuController {
     }
 }
 
-// Google Sheets Service for Chocolates
 class GoogleSheetsService {
     constructor(config) {
         this.method = config.method || 'appsScript';
@@ -640,10 +786,8 @@ class GoogleSheetsService {
     }
 }
 
-// Initialize the application
 async function initApp() {
     try {
-        // Load config
         let config = {
             googleSheets: {
                 enabled: false,
@@ -663,7 +807,6 @@ async function initApp() {
             console.log('Config file not found, using defaults');
         }
 
-        // Initialize Google Sheets service if enabled
         let sheetsService = null;
         if (config.googleSheets && config.googleSheets.enabled) {
             sheetsService = new GoogleSheetsService(config.googleSheets);
@@ -683,5 +826,4 @@ async function initApp() {
     }
 }
 
-// Start the application
 initApp();

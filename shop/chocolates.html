@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Little Treat - Premium Chocolates & Confections | Ahmedabad</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -37,10 +37,9 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul id="primary-navigation" class="nav-links">
-                <li><a href="#home">Home</a></li>
                 <li><a href="#menu">Menu</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://wa.me/917874914422" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+                <li><a href="https://www.instagram.com/little_treat_ahmedabad" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
             </ul>
         </div>
     </nav>
@@ -68,7 +67,7 @@
 
         <section id="menu" class="menu" aria-labelledby="menu-heading">
             <div class="container">
-                <h2 id="menu-heading" class="section-title">Select Your Chocolates</h2>
+                <!-- <h2 id="menu-heading" class="section-title">Select Your Chocolates</h2> -->
                 <p class="menu-subtitle">Handcrafted chocolates made with the finest ingredients. Choose your favorites and place your order!</p>
                 <!-- Step 1: Item Selection -->
                 <div id="step1" class="step active">
@@ -135,84 +134,87 @@
             </div>
         </section>
 
-        <section id="about" class="about">
+        <!-- Quick About Section (Compact) -->
+        <section id="about" class="about-compact">
             <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2>About Little Treat</h2>
-                        <p>
-                            Welcome to Little Treat, where passion meets perfection in every chocolate creation. Located in the vibrant city of Ahmedabad, 
-                            we specialize in handcrafted chocolates and artisanal confections that bring joy to every moment.
-                        </p>
-                        <p>
-                            Our journey began with a simple dream — to create chocolates that not only taste extraordinary but also tell a story of craftsmanship, quality, and love. Every piece is carefully made using the finest ingredients sourced from around the world.
-                        </p>
-                        <p>
-                            <strong>Pre-Orders & Gift Hampers:</strong> We work on a pre-order basis to ensure maximum freshness and quality. Looking for the perfect gift? Our beautiful gift hampers are customized for birthdays, anniversaries, festivals, and corporate events.
-                        </p>
-                        <div class="owners-info">
-                            <h3>Meet Our Founders</h3>
-                            <p>
-                                <strong>Foram & Parth</strong> — The creative minds behind Little Treat. With years of experience in confectionery arts and a shared passion for innovation, they bring unique flavors and artistic designs that make every treat memorable.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="hero-image">
-                        <div class="chocolate-showcase">
-                            <i class="fas fa-heart" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="container">
-                <div class="contact-content">
-                    <div>
-                        <h2>Place Your Pre-Order</h2>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                <span>Ahmedabad, Gujarat, India</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone" aria-hidden="true"></i>
-                                <span>+91 7874914422</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-gift" aria-hidden="true"></i>
-                                <span>Gift Hampers: Custom packaging available</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Customize Your Order</h2>
-                        <div class="order-steps">
-                            <h4>📞 Simple 3-Step Process:</h4>
-                            <p>1. Call or WhatsApp us with your requirements.</p>
-                            <p>2. We'll confirm your order & share pickup/delivery details.</p>
-                            <p>3. Enjoy your fresh, handcrafted treats!</p>
-                        </div>
-                        <div class="gift-info">
-                            <h4>🎁 Gift Hampers:</h4>
-                            <p>Perfect for festivals, birthdays, corporate gifts, and special celebrations. We create beautiful custom packages!</p>
-                        </div>
-                        <h3>Follow Our Sweet Journey</h3>
-                        <div class="social-links">
-                            <a href="https://www.instagram.com/little_treat_ahmedabad" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                            <a href="https://wa.me/917874914422" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                        </div>
+                <div class="about-compact-content">
+                    <div class="about-icon">🍫</div>
+                    <div class="about-text-compact">
+                        <h3>Handcrafted with deliciousness</h3>
+                        <p>Every chocolate is carefully made using the finest ingredients. Pre-order 24-48 hours in advance for maximum freshness. Custom gift hampers available for all occasions!</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Floating Category Menu Button -->
+    <button id="category-menu-btn" class="floating-menu-btn" aria-label="Open category menu">
+        <i class="fas fa-bars"></i>
+        <span>Menu</span>
+    </button>
+
+    <!-- Category Menu Popup -->
+    <div id="category-menu" class="category-menu" style="display: none;">
+        <div class="category-menu-header">
+            <h3>Categories</h3>
+            <button id="close-category-menu" class="close-menu-btn" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="category-list" class="category-list">
+            <!-- Categories will be dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Cart -->
+    <div id="sticky-cart" class="sticky-cart" style="display: none;">
+        <div class="sticky-cart-content">
+            <div class="cart-info">
+                <span class="cart-items-count" id="cart-count">0 items</span>
+                <span class="cart-divider">|</span>
+                <span class="cart-total" id="cart-total-sticky">₹0</span>
+            </div>
+            <button id="view-cart-btn" class="view-cart-btn">
+                View Cart <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay for category menu -->
+    <div id="category-overlay" class="category-overlay" style="display: none;"></div>
+
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Little Treat. Crafted with 💝 by Foram & Parth | All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Little Treat</h4>
+                    <p>Handcrafted chocolates made deliciously in Ahmedabad. Pre-orders & custom gift hampers available.</p>
+                    <p class="footer-tagline">💜 Lovingly crafted by Foram</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> +91 7874914422</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Bopal & Shela, Ahmedabad</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/little_treat_ahmedabad" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/917874914422" target="_blank" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p><a href="#menu">Browse Menu</a></p>
+                    <p><a href="https://wa.me/917874914422" target="_blank">Place Order</a></p>
+                    <p><a href="../index.html">Home Made Foods</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Little Treat. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
