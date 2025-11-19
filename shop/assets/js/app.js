@@ -230,7 +230,31 @@ class MenuView {
         card.className = 'menu-item';
         card.dataset.itemId = item.id;
 
-        if (item.icon) {
+        // Add image if available, otherwise show icon
+        if (item.image) {
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'menu-item__image-container';
+            
+            const image = document.createElement('img');
+            image.className = 'menu-item__image';
+            image.src = item.image;
+            image.alt = item.name;
+            image.loading = 'lazy';
+            
+            // Fallback to icon if image fails to load
+            image.onerror = () => {
+                imageContainer.innerHTML = '';
+                if (item.icon) {
+                    const icon = document.createElement('span');
+                    icon.className = 'menu-item__icon-fallback';
+                    icon.textContent = item.icon;
+                    imageContainer.appendChild(icon);
+                }
+            };
+            
+            imageContainer.appendChild(image);
+            card.appendChild(imageContainer);
+        } else if (item.icon) {
             const icon = document.createElement('span');
             icon.className = 'menu-item__icon';
             icon.textContent = item.icon;

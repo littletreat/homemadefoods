@@ -9,6 +9,7 @@
           "id": "plain-white",
           "name": "Plain White Chocolate",
           "icon": "🤍",
+          "image": "images/plain_white.jpeg",
           "description": "Velvety white couverture with a creamy finish.",
           "price": 15,
           "unitLabel": "₹15 per piece"
@@ -17,6 +18,7 @@
           "id": "plain-dark",
           "name": "Plain Dark Chocolate",
           "icon": "🖤",
+          "image": "images/plain_dark.jpeg",
           "description": "Rich 55% dark chocolate with a smooth snap.",
           "price": 15,
           "unitLabel": "₹15 per piece"
@@ -25,6 +27,7 @@
           "id": "plain-milk",
           "name": "Plain Milk Chocolate",
           "icon": "🤎",
+          "image": "images/plain_milk.jpeg",
           "description": "Classic milk chocolate, silky and comforting.",
           "price": 15,
           "unitLabel": "₹15 per piece"
@@ -48,6 +51,7 @@
           "id": "pan-masala-pinata",
           "name": "Pan Masala Pinata",
           "icon": "🎭",
+          "image": "images/pinata_pan_masala.jpeg",
           "description": "Traditional pan masala notes inside a chocolate shell.",
           "price": 15,
           "unitLabel": "₹15 per piece"
@@ -56,6 +60,7 @@
           "id": "crispy-coffee-bite",
           "name": "Crispy Coffee Bite",
           "icon": "☕",
+          "image": "images/crispy_coffee_bites.jpeg",
           "description": "Espresso-infused chocolate with a crunchy finish.",
           "price": 20,
           "unitLabel": "₹20 per piece"
@@ -64,6 +69,7 @@
           "id": "salted-caramel-bite",
           "name": "Salted Caramel Bite",
           "icon": "🧂",
+          "image": "images/caremal_crush_bites.jpeg",
           "description": "Soft caramel centre, finished with Maldon sea salt.",
           "price": 12,
           "unitLabel": "₹12 per piece"
@@ -72,6 +78,7 @@
           "id": "pineapple-crush-bite",
           "name": "Pineapple Crush Bite",
           "icon": "🍍",
+          "image": "images/pineapple_crush_bites.jpeg",
           "description": "Tropical pineapple puree wrapped in chocolate.",
           "price": 12,
           "unitLabel": "₹12 per piece"
@@ -80,6 +87,7 @@
           "id": "strawberry-crush-bite",
           "name": "Strawberry Crush Bite",
           "icon": "🍓",
+          "image": "images/strawberry_crush_bites.jpeg",
           "description": "Strawberry compote encased in creamy chocolate.",
           "price": 12,
           "unitLabel": "₹12 per piece"
@@ -88,6 +96,7 @@
           "id": "mixed-berry-white",
           "name": "Mixed Berry White Chocolate",
           "icon": "🫐",
+          "image": "images/mixed_berry_white_chocolate.jpeg",
           "description": "Tangy berries suspended in Belgian white chocolate.",
           "price": 15,
           "unitLabel": "₹15 per piece"
@@ -103,6 +112,7 @@
           "id": "almond-walnut",
           "name": "Almond Walnut Chocolate",
           "icon": "🌰",
+          "image":"images/almond_walnut_chocolate.jpeg",
           "description": "Roasted almonds and walnuts folded into chocolate.",
           "price": 25,
           "unitLabel": "₹25 per piece"
@@ -111,6 +121,7 @@
           "id": "dates-almond",
           "name": "Dates Almond Chocolate",
           "icon": "🌴",
+          "image": "images/dates_almond.jpeg",
           "description": "Stuffed Medjool dates dipped in rich chocolate.",
           "price": 25,
           "unitLabel": "₹25 per piece"
@@ -119,6 +130,7 @@
           "id": "mini-coffee-cups",
           "name": "Mini Coffee Cups",
           "icon": "🍮",
+          "image": "images/mini_coffee_cups.jpeg",
           "description": "Bite-sized coffee ganache in edible chocolate cups.",
           "price": 25,
           "unitLabel": "₹25 per piece"
@@ -127,6 +139,7 @@
           "id": "ferrero-rocher",
           "name": "Ferrero Rocher Style",
           "icon": "✨",
+          "image": "images/ferrero_rocher.jpeg",
           "description": "Hazelnut centre with crisp wafer layers.",
           "price": 40,
           "unitLabel": "₹40 per piece"
@@ -142,6 +155,7 @@
           "id": "designer-bar",
           "name": "Designer Chocolate Bar",
           "icon": "🎨",
+          "image": "images/designer_chocolate_bar.jpeg",
           "description": "Hand-painted bar featuring seasonal inclusions.",
           "price": 200,
           "unitLabel": "₹200 per bar"
@@ -150,6 +164,7 @@
           "id": "salted-caramel-bar",
           "name": "Salted Caramel Bar",
           "icon": "🍯",
+          "image": "images/salted_caremal_bar.jpeg",
           "description": "Layered caramel, nougat and chocolate bar.",
           "price": 200,
           "unitLabel": "₹200 per bar"
@@ -158,6 +173,7 @@
           "id": "bonty-bar",
           "name": "Bonty Bar",
           "icon": "🥥",
+          "image": "images/bounty_bars.jpeg",
           "description": "Coconut filling coated in silky milk chocolate.",
           "price": 30,
           "unitLabel": "₹30 per bar"
@@ -166,6 +182,7 @@
           "id": "bubbly-bar",
           "name": "Bubbly Chocolate Bar",
           "icon": "🫧",
+          "image": "images/bubbly_shaped_bar.jpeg",
           "description": "Aerated chocolate bar for a melt-in-mouth bite.",
           "price": 150,
           "unitLabel": "₹150 per bar"

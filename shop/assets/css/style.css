@@ -332,6 +332,34 @@ main {
     font-size: 2rem;
 }
 
+.menu-item__image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--soft-lavender);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover .menu-item__image {
+    transform: scale(1.05);
+}
+
+.menu-item__icon-fallback {
+    font-size: 4rem;
+    opacity: 0.3;
+}
+
 .menu-item__header {
     display: flex;
     align-items: flex-start;
@@ -1084,6 +1112,10 @@ body:has(#step2.active) .sticky-cart {
 
     .menu-item {
         padding: 1.25rem;
+    }
+
+    .menu-item__image-container {
+        height: 180px;
     }
 
     .menu-item__header {
