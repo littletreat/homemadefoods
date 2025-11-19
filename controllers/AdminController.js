@@ -78,9 +78,8 @@ class AdminController {
             this.view.hideLoading();
             this.view.showOrdersSection();
 
-            console.log(`Loaded ${this.model.getAllOrders().length} orders`);
         } catch (error) {
-            console.error('Error loading orders:', error);
+            console.error('Error loading:', error);
             this.view.hideLoading();
             this.view.showError('Failed to load orders. Please try again.');
         }

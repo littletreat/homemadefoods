@@ -165,59 +165,6 @@ main {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Navigation Bar */
-.navbar {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background: rgba(250, 247, 255, 0.95);
-    backdrop-filter: blur(12px);
-    padding: 1rem 0;
-    z-index: 1000;
-    transition: box-shadow 0.3s ease;
-}
-
-.navbar.is-scrolled {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    background: rgba(250, 247, 255, 0.98);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.nav-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    color: var(--deep-purple);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    color: var(--text-dark);
-}
-
-.nav-links a:hover,
-.nav-links a:focus-visible {
-    color: var(--primary-purple);
-}
 
 /* Quick Info Banner */
 .quick-info-banner {
@@ -225,6 +172,9 @@ main {
     padding: 1.5rem 0;
     border-bottom: 2px solid var(--light-purple);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .info-items {
@@ -247,6 +197,24 @@ main {
 .info-item i {
     color: var(--primary-purple);
     font-size: 1.2rem;
+}
+
+.info-link {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: var(--soft-lavender);
+    transition: all 0.3s ease;
+}
+
+.info-link:hover {
+    background: var(--light-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(177, 156, 217, 0.3);
+}
+
+.info-link i {
+    font-size: 1.3rem;
 }
 
 .cta-button {
@@ -486,7 +454,27 @@ main {
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--deep-purple);
+    margin-bottom: 0.5rem;
+}
+
+.order-note {
+    font-size: 0.85rem;
+    color: rgba(74, 59, 92, 0.7);
+    font-style: italic;
     margin-bottom: 1rem;
+    text-align: right;
+}
+
+.order-note-checkout {
+    font-size: 0.9rem;
+    color: rgba(74, 59, 92, 0.7);
+    font-style: italic;
+    margin-top: 0.5rem;
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(177, 156, 217, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-purple);
 }
 
 /* Compact About Section */
@@ -889,35 +877,6 @@ body:has(#step2.active) .sticky-cart {
 
     .info-item {
         font-size: 0.85rem;
-    }
-
-    .nav-toggle {
-        display: inline-flex;
-    }
-
-    .nav-links {
-        position: absolute;
-        top: 100%;
-        right: 1.5rem;
-        flex-direction: column;
-        background: rgba(250, 247, 255, 0.98);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: var(--shadow-soft);
-        gap: 1.25rem;
-        min-width: 180px;
-        transform-origin: top right;
-        transform: scaleY(0.6);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-    }
-
-    .nav-links.is-open {
-        opacity: 1;
-        visibility: visible;
-        transform: scaleY(1);
-        transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .about-compact-content {

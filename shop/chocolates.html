@@ -29,20 +29,6 @@
         </div>
     </header>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar" data-controller="navbar">
-        <div class="nav-container">
-            <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
-                <span class="sr-only">Toggle navigation</span>
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul id="primary-navigation" class="nav-links">
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="https://wa.me/917874914422" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                <li><a href="https://www.instagram.com/little_treat_ahmedabad" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-            </ul>
-        </div>
-    </nav>
 
     <main>
         <!-- Quick Info Banner -->
@@ -61,6 +47,11 @@
                         <i class="fas fa-heart"></i>
                         <span>Lovingly crafted by Foram</span>
                     </div>
+                    
+                    <a href="https://www.instagram.com/little_treat_ahmedabad" target="_blank" class="info-item info-link">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -69,7 +60,6 @@
             <div class="container">
                 <!-- <h2 id="menu-heading" class="section-title">Select Your Chocolates</h2> -->
                 <p class="menu-subtitle">Handcrafted chocolates made with the finest ingredients. Choose your favorites and place your order!</p>
-                <!-- Step 1: Item Selection -->
                 <div id="step1" class="step active">
                     <div id="menu-root" class="menu-grid" role="list"></div>
                     <section class="order-summary" aria-live="polite">
@@ -79,6 +69,7 @@
                         </div>
                         <div class="order-summary__actions">
                             <p class="order-summary__total">Total: <span id="order-total">₹0</span></p>
+                            <p class="order-note">* Packaging charges extra</p>
                             <button id="proceed-btn" class="cta-button" type="button">
                                 Proceed to Delivery & Review <i class="fas fa-arrow-right"></i>
                             </button>
@@ -120,6 +111,7 @@
                             <span>Total Amount:</span>
                             <span id="finalTotalPrice">₹0</span>
                         </div>
+                        <p class="order-note-checkout">* Total price is exclusive of packaging charges</p>
 
                         <div class="nav-buttons">
                             <button class="btn-secondary" id="back-btn">

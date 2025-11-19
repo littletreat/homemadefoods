@@ -27,7 +27,7 @@ class MenuController {
             this.setupEventListeners();
                         
             if (this.sheetsService && this.sheetsService.enabled) {
-                console.log('✅ Google Sheets integration enabled');
+                console.log('✅ Sheets integration enabled');
             }
         } catch (error) {
             console.error('Failed to initialize app:', error);

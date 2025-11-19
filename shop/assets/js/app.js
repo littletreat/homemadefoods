@@ -8,7 +8,6 @@ class MenuModel {
 
     async loadMenu() {
         try {
-            console.log('Fetching menu from:', this.dataUrl);
             const response = await fetch(this.dataUrl);
 
             if (!response.ok) {
@@ -16,7 +15,6 @@ class MenuModel {
             }
 
             const data = await response.json();
-            console.log('Parsed JSON data:', data);
             this.categories = Array.isArray(data.categories) ? data.categories : [];
             this.itemsById.clear();
             this.quantities.clear();
@@ -28,10 +26,8 @@ class MenuModel {
                 });
             });
 
-            console.log('Loaded categories:', this.categories.length);
             return this.categories;
         } catch (error) {
-            console.error('Error fetching menu, trying fallback data...', error);
             
             if (window.MENU_DATA_FALLBACK) {
                 console.log('Using fallback menu data');
@@ -47,7 +43,6 @@ class MenuModel {
                     });
                 });
 
-                console.log('Loaded categories from fallback:', this.categories.length);
                 return this.categories;
             }
             
@@ -101,9 +96,6 @@ class MenuView {
         this.proceedButton = document.getElementById('proceed-btn');
         this.bookOrderButton = document.getElementById('book-order');
         this.backButton = document.getElementById('back-btn');
-        this.navToggle = document.querySelector('.nav-toggle');
-        this.navLinks = document.getElementById('primary-navigation');
-        this.navbar = document.querySelector('.navbar');
         this.step1 = document.getElementById('step1');
         this.step2 = document.getElementById('step2');
         this.flatNumberInput = document.getElementById('flatNumber');
@@ -343,27 +335,7 @@ class MenuView {
         this.bookOrderButton.addEventListener('click', handler);
     }
 
-    bindNavToggle(handler) {
-        if (!this.navToggle) return;
-        this.navToggle.addEventListener('click', handler);
-    }
 
-    bindNavLinks(handler) {
-        if (!this.navLinks) return;
-        this.navLinks.querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', handler);
-        });
-    }
-
-    toggleNavigation(isOpen) {
-        if (!this.navToggle || !this.navLinks) return;
-        this.navToggle.setAttribute('aria-expanded', String(isOpen));
-        this.navLinks.classList.toggle('is-open', isOpen);
-    }
-
-    closeNavigation() {
-        this.toggleNavigation(false);
-    }
 
     updateQuantityDisplay(itemId, quantity) {
         const element = this.menuRoot?.querySelector(`[data-quantity-for="${itemId}"]`);
@@ -437,9 +409,9 @@ class MenuView {
     scrollToCategory(categoryId) {
         const categoryElement = document.getElementById(`category-${categoryId}`);
         if (categoryElement) {
-            const navbarHeight = this.navbar?.offsetHeight || 80;
+            const quickInfoHeight = document.querySelector('.quick-info-banner')?.offsetHeight || 80;
             const elementPosition = categoryElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+            const offsetPosition = elementPosition + window.pageYOffset - quickInfoHeight - 20;
             
             window.scrollTo({
                 top: offsetPosition,
@@ -452,9 +424,9 @@ class MenuView {
     scrollToOrderSummary() {
         const orderSummary = document.querySelector('.order-summary');
         if (orderSummary) {
-            const navbarHeight = this.navbar?.offsetHeight || 80;
+            const quickInfoHeight = document.querySelector('.quick-info-banner')?.offsetHeight || 80;
             const elementPosition = orderSummary.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+            const offsetPosition = elementPosition + window.pageYOffset - quickInfoHeight - 20;
             
             window.scrollTo({
                 top: offsetPosition,
@@ -508,7 +480,6 @@ class MenuView {
             this.step2.style.display = 'none';
             this.step1.classList.add('active');
             this.step2.classList.remove('active');
-            // Show sticky cart if items exist
             const items = this.model?.getSelectedItems() || [];
             if (items.length > 0 && this.stickyCart) {
                 this.stickyCart.style.display = 'block';
@@ -521,7 +492,17 @@ class MenuView {
             if (this.stickyCart) {
                 this.stickyCart.style.display = 'none';
             }
-            this.step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            setTimeout(() => {
+                const quickInfoHeight = document.querySelector('.quick-info-banner')?.offsetHeight || 80;
+                const elementPosition = this.step2.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - quickInfoHeight - 20;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
     }
 
@@ -545,10 +526,6 @@ class MenuView {
         return isValid;
     }
 
-    setNavScrolled(isScrolled) {
-        if (!this.navbar) return;
-        this.navbar.classList.toggle('is-scrolled', isScrolled);
-    }
 
     showEmptyOrderMessage() {
         window.alert('Please add at least one item before proceeding.');
@@ -565,19 +542,15 @@ class MenuController {
         this.view = view;
         this.whatsappNumber = whatsappNumber.replace(/\D/g, '');
         this.sheetsService = sheetsService;
-        this.navigationOpen = false;
     }
 
     async init() {
         try {
-            console.log('Initializing menu...');
             const categories = await this.model.loadMenu();
-            console.log('Menu loaded:', categories);
             this.view.renderMenu(categories);
             this.view.updateOrderSummary([], 0);
             this.registerEvents();
         } catch (error) {
-            console.error('Error loading menu:', error);
             this.showLoadError();
         }
     }
@@ -594,16 +567,6 @@ class MenuController {
         this.view.bindProceedToAddress(() => this.handleProceedToAddress());
         this.view.bindBackToMenu(() => this.handleBackToMenu());
         this.view.bindBookOrder(() => this.handleBookOrder());
-
-        this.view.bindNavToggle(() => {
-            this.navigationOpen = !this.navigationOpen;
-            this.view.toggleNavigation(this.navigationOpen);
-        });
-
-        this.view.bindNavLinks(() => {
-            this.navigationOpen = false;
-            this.view.closeNavigation();
-        });
         
         if (this.view.categoryMenuBtn) {
             this.view.categoryMenuBtn.addEventListener('click', () => {
@@ -639,10 +602,6 @@ class MenuController {
                 this.view.scrollToOrderSummary();
             });
         }
-
-        window.addEventListener('scroll', () => {
-            this.view.setNavScrolled(window.scrollY > 40);
-        });
     }
 
     refreshSummary() {
@@ -745,7 +704,6 @@ class GoogleSheetsService {
 
     async saveOrder(orderData) {
         if (!this.enabled || !this.webAppUrl) {
-            console.log('Google Sheets integration is disabled or not configured');
             return false;
         }
 
