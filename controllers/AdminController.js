@@ -1,6 +1,4 @@
-/**
- * AdminController - Handles business logic for admin dashboard
- */
+
 class AdminController {
     constructor(model, view) {
         this.model = model;
@@ -8,18 +6,10 @@ class AdminController {
         this.currentDisplayedOrders = [];
     }
 
-    /**
-     * Initialize the dashboard
-     */
     async init() {
         try {
-            // Load configuration
             await this.model.loadConfig();
-
-            // Initial data load
             await this.loadOrders();
-
-            // Setup event listeners
             this.setupEventListeners();
         } catch (error) {
             console.error('Initialization error:', error);
@@ -27,11 +17,7 @@ class AdminController {
         }
     }
 
-    /**
-     * Setup all event listeners
-     */
     setupEventListeners() {
-        // Refresh button
         const refreshBtn = document.getElementById('refreshBtn');
         if (refreshBtn) {
             refreshBtn.addEventListener('click', async () => {
@@ -40,8 +26,7 @@ class AdminController {
                 this.view.enableRefresh();
             });
         }
-
-        // Search input
+        
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', () => {
@@ -49,7 +34,6 @@ class AdminController {
             });
         }
 
-        // Sort select
         const sortSelect = document.getElementById('sortSelect');
         if (sortSelect) {
             sortSelect.addEventListener('change', () => {
@@ -57,7 +41,6 @@ class AdminController {
             });
         }
 
-        // Status filter
         const statusFilter = document.getElementById('statusFilter');
         if (statusFilter) {
             statusFilter.addEventListener('change', () => {
@@ -65,7 +48,6 @@ class AdminController {
             });
         }
 
-        // Status badge clicks (event delegation)
         const tableBody = document.getElementById('ordersTableBody');
         if (tableBody) {
             tableBody.addEventListener('click', (e) => {
@@ -79,25 +61,18 @@ class AdminController {
         }
     }
 
-    /**
-     * Load orders from Google Sheets
-     */
     async loadOrders() {
         try {
             this.view.showLoading();
 
-            // Fetch orders
             await this.model.fetchOrders();
             this.currentDisplayedOrders = this.model.getAllOrders();
 
-            // Apply current filters and sort
             this.applyFiltersAndSort();
 
-            // Update summary
             const summary = this.model.calculateSummary();
             this.view.updateSummary(summary);
 
-            // Render orders
             this.view.renderOrders(this.currentDisplayedOrders);
 
             this.view.hideLoading();
@@ -111,70 +86,49 @@ class AdminController {
         }
     }
 
-    /**
-     * Handle search
-     */
     handleSearch() {
         const query = this.view.getSearchQuery();
         const statusFilter = this.view.getStatusFilter();
 
-        // Start with all orders
         let filtered = this.model.getAllOrders();
 
-        // Apply status filter first
         if (statusFilter !== 'all') {
             filtered = this.model.getOrdersByStatus(statusFilter);
         }
 
-        // Then apply search
         if (query && query.trim() !== '') {
             filtered = this.model.searchOrders(query);
             
-            // Reapply status filter to search results if needed
             if (statusFilter !== 'all') {
                 filtered = filtered.filter(order => order.status === statusFilter);
             }
         }
 
-        // Apply sort
         const sortBy = this.view.getSortOption();
         this.currentDisplayedOrders = this.model.sortOrders(filtered, sortBy);
 
-        // Render
         this.view.renderOrders(this.currentDisplayedOrders);
     }
 
-    /**
-     * Handle sort
-     */
     handleSort() {
         const sortBy = this.view.getSortOption();
         this.currentDisplayedOrders = this.model.sortOrders(this.currentDisplayedOrders, sortBy);
         this.view.renderOrders(this.currentDisplayedOrders);
     }
 
-    /**
-     * Handle status filter
-     */
     handleStatusFilter() {
         this.applyFiltersAndSort();
     }
 
-    /**
-     * Apply all filters and sorting
-     */
     applyFiltersAndSort() {
         const statusFilter = this.view.getStatusFilter();
         const searchQuery = this.view.getSearchQuery();
         const sortBy = this.view.getSortOption();
 
-        // Start with filtered by status
         let filtered = this.model.getOrdersByStatus(statusFilter);
 
-        // Apply search if present
         if (searchQuery && searchQuery.trim() !== '') {
             const searchResults = this.model.searchOrders(searchQuery);
-            // Intersect with status filter
             if (statusFilter !== 'all') {
                 filtered = searchResults.filter(order => order.status === statusFilter);
             } else {
@@ -182,16 +136,10 @@ class AdminController {
             }
         }
 
-        // Apply sort
         this.currentDisplayedOrders = this.model.sortOrders(filtered, sortBy);
-
-        // Render
         this.view.renderOrders(this.currentDisplayedOrders);
     }
 
-    /**
-     * Cycle through status (Pending → Dispatched → Delivered → Pending)
-     */
     async cycleStatus(orderId, currentStatus) {
         const statusCycle = {
             'Pending': 'Dispatched',
@@ -209,9 +157,6 @@ class AdminController {
         }
     }
 
-    /**
-     * Update order status in Google Sheets
-     */
     async updateOrderStatus(orderId, newStatus) {
         try {
             const webAppUrl = this.model.getWebAppUrl();
@@ -229,18 +174,12 @@ class AdminController {
                 })
             });
 
-            // Update local order data
             this.model.updateOrderStatus(orderId, newStatus);
-
-            // Re-apply filters and render
             this.applyFiltersAndSort();
-
-            console.log(`✅ Status updated: ${orderId} → ${newStatus}`);
-
         } catch (error) {
-            console.error('Error updating status:', error);
             throw error;
         }
     }
 }
+
 

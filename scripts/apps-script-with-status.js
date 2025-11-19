@@ -9,12 +9,10 @@ function doPost(e) {
     
     var data = JSON.parse(e.postData.contents);
     
-    // Check if this is a status update
     if (data.action === 'updateStatus') {
       return updateOrderStatus(data.orderId, data.status);
     }
     
-    // Save order with correct column order - 9 columns now (added Status)
     sheet.appendRow([
       data.orderId,
       data.date,
@@ -23,7 +21,7 @@ function doPost(e) {
       data.apartmentName,
       data.items,
       data.total,
-      'Pending',  // Default status
+      'Pending',
       data.timestamp
     ]);
     
@@ -45,7 +43,6 @@ function doPost(e) {
   }
 }
 
-// Read orders endpoint for admin dashboard
 function doGet(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Orders');
@@ -59,10 +56,8 @@ function doGet(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
     
-    // Get all data from sheet - use getDisplayValues() to get formatted text
     var data = sheet.getDataRange().getDisplayValues();
     
-    // Skip header row, convert to array of objects - 9 columns now
     var orders = [];
     for (var i = 1; i < data.length; i++) {
       var row = data[i];
@@ -76,11 +71,10 @@ function doGet(e) {
         total: formatCellValue(row[6]),
         status: formatCellValue(row[7]) || 'Pending',
         timestamp: formatCellValue(row[8]),
-        rowIndex: i + 1  // Store row index for updates (1-based, +1 for header)
+        rowIndex: i + 1  
       });
     }
     
-    // Sort by timestamp (newest first)
     orders.sort(function(a, b) {
       return new Date(b.timestamp) - new Date(a.timestamp);
     });
@@ -103,7 +97,6 @@ function doGet(e) {
   }
 }
 
-// Update order status function
 function updateOrderStatus(orderId, newStatus) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Orders');
@@ -114,10 +107,8 @@ function updateOrderStatus(orderId, newStatus) {
     
     var data = sheet.getDataRange().getValues();
     
-    // Find the order by ID (column A, index 0)
     for (var i = 1; i < data.length; i++) {
       if (data[i][0] === orderId) {
-        // Update status (column H, index 7)
         sheet.getRange(i + 1, 8).setValue(newStatus);
         
         return ContentService
@@ -131,7 +122,6 @@ function updateOrderStatus(orderId, newStatus) {
       }
     }
     
-    // Order not found
     return ContentService
       .createTextOutput(JSON.stringify({
         'status': 'error',
@@ -149,7 +139,6 @@ function updateOrderStatus(orderId, newStatus) {
   }
 }
 
-// Helper function to format cell values (now just returns the display value)
 function formatCellValue(value) {
   if (value === null || value === undefined || value === '') {
     return '';
