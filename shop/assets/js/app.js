@@ -626,6 +626,33 @@ class MenuController {
                 this.view.scrollToOrderSummary();
             });
         }
+        
+        this.setupFloatingMenuVisibility();
+    }
+    
+    setupFloatingMenuVisibility() {
+        const menuSection = document.getElementById('menu');
+        const floatingBtn = this.view.categoryMenuBtn;
+        
+        if (!menuSection || !floatingBtn) return;
+        
+        const checkVisibility = () => {
+            const menuRect = menuSection.getBoundingClientRect();
+            const isMenuVisible = menuRect.top < window.innerHeight && menuRect.bottom > 0;
+            const isStep1Active = this.view.step1?.classList.contains('active');
+            
+            if (isMenuVisible && isStep1Active) {
+                floatingBtn.classList.add('visible');
+            } else {
+                floatingBtn.classList.remove('visible');
+            }
+        };
+        
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility, { passive: true });
+        
+        // Check initially after a short delay
+        setTimeout(checkVisibility, 500);
     }
 
     refreshSummary() {
@@ -667,21 +694,6 @@ class MenuController {
         const addressData = this.view.getAddressData();
         const total = this.model.getOrderTotal();
 
-        if (this.sheetsService) {
-            const orderData = {
-                flatNumber: addressData.flatNumber,
-                apartmentName: addressData.apartmentName,
-                items: items.map(item => `${item.name} x ${item.quantity} pcs (₹${item.subtotal})`).join(', '),
-                total: `₹${total}`
-            };
-
-            try {
-                await this.sheetsService.saveOrder(orderData);
-            } catch (error) {
-                console.error('Failed to save order to Google Sheets:', error);
-            }
-        }
-
         // Generate WhatsApp message
         const messageLines = [
             'Hello Little Treat,',
@@ -702,7 +714,24 @@ class MenuController {
 
         const message = encodeURIComponent(messageLines.join('\n'));
         const whatsappUrl = `https://wa.me/${this.whatsappNumber}?text=${message}`;
+        
+        // Open WhatsApp immediately
         window.open(whatsappUrl, '_blank', 'noopener');
+
+        // Save to Google Sheets in background (don't wait)
+        if (this.sheetsService) {
+            const orderData = {
+                flatNumber: addressData.flatNumber,
+                apartmentName: addressData.apartmentName,
+                items: items.map(item => `${item.name} x ${item.quantity} pcs (₹${item.subtotal})`).join(', '),
+                total: `₹${total}`
+            };
+
+            // Fire and forget - save in background
+            this.sheetsService.saveOrder(orderData).catch(error => {
+                console.error('Failed to save order to Google Sheets:', error);
+            });
+        }
     }
 
     showLoadError() {

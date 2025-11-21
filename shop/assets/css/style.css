@@ -172,9 +172,6 @@ main {
     padding: 1.5rem 0;
     border-bottom: 2px solid var(--light-purple);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .info-items {
@@ -261,12 +258,20 @@ main {
 
 .menu-subtitle {
     text-align: center;
-    color: var(--text-dark);
-    font-size: 1.1rem;
+    color: var(--deep-purple);
+    font-size: 1.2rem;
+    font-weight: 500;
     margin-bottom: 3rem;
-    max-width: 700px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--soft-lavender), var(--light-purple));
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(177, 156, 217, 0.2);
+    border-left: 4px solid var(--primary-purple);
+    line-height: 1.6;
+    font-style: italic;
 }
 
 .menu-grid {
@@ -548,8 +553,8 @@ main {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    background: white;
-    border: 2px solid var(--primary-purple);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(177, 156, 217, 0.3);
     border-radius: 30px;
     padding: 12px 20px;
     display: flex;
@@ -557,22 +562,31 @@ main {
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 900;
     transition: all 0.3s ease;
-    color: var(--deep-purple);
-    font-weight: 600;
-    font-size: 0.85rem;
+    color: var(--primary-purple);
+    font-weight: 500;
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-menu-btn.visible {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .floating-menu-btn:hover {
-    background: var(--light-purple);
+    background: white;
+    border-color: var(--primary-purple);
     transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 6px 20px rgba(177, 156, 217, 0.4);
+    box-shadow: 0 4px 15px rgba(177, 156, 217, 0.3);
 }
 
 .floating-menu-btn i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    color: var(--primary-purple);
 }
 
 /* Hide floating menu and sticky cart when in step 2 */
@@ -1081,10 +1095,6 @@ body:has(#step2.active) .sticky-cart {
         font-size: 0.8rem;
     }
 
-    .nav-container {
-        padding: 0 1rem;
-    }
-
     .about-compact {
         padding: 2rem 0;
     }
@@ -1103,6 +1113,12 @@ body:has(#step2.active) .sticky-cart {
 
     .menu {
         padding: 2rem 0 3rem;
+    }
+
+    .menu-subtitle {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .menu-category,

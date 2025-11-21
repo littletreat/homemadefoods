@@ -1,10 +1,9 @@
 {
   "googleSheets": {
-    "enabled": false,
+    "enabled": true,
     "method": "appsScript",
-    "webAppUrl": "",
+    "webAppUrl": "https://script.google.com/macros/s/AKfycbyCT3S1Ye3NrSv-4uuPB5HlF-ySikjz2sTLYz_D1D1KAHQCcskcSS0M6XKSNBWcqi3o/exec",
     "sheetName": "chocolates_orders"
   },
   "whatsappNumber": "+91 7874914422"
 }
-

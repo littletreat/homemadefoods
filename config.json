@@ -11,7 +11,7 @@
   "googleSheets": {
     "enabled": true,
     "method": "appsScript",
-    "webAppUrl": "https://script.google.com/macros/s/AKfycbyAeUQnHqHCnAZLDhlk6LHmoD6zOgP-U1wmfj7IpLM4bDWYoQvfExuaJ1s5-qFC6_Bv/exec",
+    "webAppUrl": "https://script.google.com/macros/s/AKfycbyCT3S1Ye3NrSv-4uuPB5HlF-ySikjz2sTLYz_D1D1KAHQCcskcSS0M6XKSNBWcqi3o/exec",
     "sheetName": "Orders"
   }
 }
